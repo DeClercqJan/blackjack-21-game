@@ -53,6 +53,13 @@ if (isset($_GET["play-game-button"])) {
             $dealer->hit($dealer->score);
         }
         // VRAAG: MOET HET SPEL DAN METEEN VOLLEDIG AFGELOPEN ZIJN?
+        if ($dealer->score > 21) {
+            $player->status = "win";
+        } else if ($player->score > $dealer->score && $player->score <= 21) {
+            $player->status = "win";
+        } else {
+            $player->status = "lose";
+        }
     } else if ($_POST["player-action"] == "surrender") {
         // var_dump($player);
         $player->surrender();
@@ -63,21 +70,22 @@ if (isset($_GET["play-game-button"])) {
     {
         var_dump($player);
         var_dump($dealer);
+        if ($player->score == 21) {
+            $player->status = 21;
+        }
         if ($player->score == 21 && $player->cards == 2) {
-            $player->status = "win";
+            $player->status = "win, blackjack even";
         }
         if ($player->score > 21) {
             $player->status = "lose";
         }
         // zorgen dat timing goed is
-        // if ($player->score > $dealer->score && $player->score <= 21) {
-        //     $player->status = "win";
-        // }
+
         if ($player->status == "undecided") {
             echo "player score is $player->score";
             // echo "dealer score is $dealer->score";
         } else if ($player->status == "win") {
-            echo "you win, cuz you have $player->score";
+            echo "you win, cuz you have $player->score and the dealer has $dealer->score";
             // eventueel deze zaken nog in afzonderlijk reset-functie steken
             $player->score = 0;
             $player->status = "undecided";
@@ -94,7 +102,7 @@ if (isset($_GET["play-game-button"])) {
             setcookie("games-lost", $games_lost_new);
             echo "you have now lost $games_lost_new games. Play again.";
         } else {
-            echo "you lose, cuz you have $player->score";
+            echo "you lose, cuz you have $player->score and the dealer has $dealer->score";
             $player->score = 0;
             $player->status = "undecided";
             $games_lost_previous = $_COOKIE["games-lost"];
