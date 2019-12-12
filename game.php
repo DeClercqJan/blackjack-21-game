@@ -1,6 +1,9 @@
 <?php
 require("Blackjack.php");
 session_start();
+if (!isset($_COOKIE["games-lost"])) {
+    setcookie("games-lost", 0);
+}
 // echo "test game.php";
 // var_dump($_GET);
 if (isset($_GET["play-game-button"])) {
@@ -8,18 +11,19 @@ if (isset($_GET["play-game-button"])) {
     // On game.php instantiate the Blackjack class twice, insert it into a player variable and a dealer variable
     $player = new Blackjack();
     $dealer = new Blackjack();
-    $player->hit();
+    $player->hit($player->score);
+    $dealer->hit($dealer->score);
     echo "player score is $player->score";
     echo "dealer score is $dealer->score";
     $_SESSION["player"] = serialize($player);
     $_SESSION["dealer"] = serialize($dealer);
     ?>
     <form method="POST" action="game.php">
-        <input type="checkbox" id="hit" name="player-action" checked>
+        <input type="radio" id="hit" name="player-action" value="hit" checked>
         <label for="hit">hit</label>
-        <input type="checkbox" id="stand" name="player-action">
+        <input type="radio" id="stand" name="player-action" value="stand">
         <label for="stand">stand</label>
-        <input type="checkbox" id="surrender" name="player-action">
+        <input type="radio" id="surrender" name="player-action" value="surrender">
         <label for="surrender">surrender</label>
         <input type="submit">
     </form>
@@ -31,20 +35,33 @@ if (isset($_GET["play-game-button"])) {
     $player = unserialize($_SESSION["player"]);
     $dealer = unserialize($_SESSION["dealer"]);
     // deze nog afhankelijk maken van actie
-    $player->hit($player->score);
-    echo "player score is $player->score";
-    echo "dealer score is $dealer->score";
+    var_dump($_POST);
+    if ($_POST["player-action"] == "hit") {
+        $player->hit($player->score);
+    }
+    if ($player->status == "undecided") {
+        echo "player score is $player->score";
+        echo "dealer score is $dealer->score";
+    } else {
+        echo "you lose, cuz you have $player->score";
+        $player->score = 0;
+        $player->status = "undecided";
+        $games_lost_previous = $_COOKIE["games-lost"];
+        $games_lost_new = (int) $games_lost_previous + 1;
+        setcookie("games-lost", $games_lost_new);
+        echo "you have now lost $games_lost_new games. Play again.";
+    }
     $_SESSION["player"] = serialize($player);
     $_SESSION["dealer"] = serialize($dealer);
     // Use forms to send to the game.php page what the player's action is. (i.e. hit/stand/surrender)
 
     ?>
     <form method="POST" action="game.php">
-        <input type="checkbox" id="hit" name="player-action" checked>
+        <input type="radio" id="hit" name="player-action" value="hit" checked>
         <label for="hit">hit</label>
-        <input type="checkbox" id="stand" name="player-action">
+        <input type="radio" id="stand" name="player-action" value="stand">
         <label for="stand">stand</label>
-        <input type="checkbox" id="surrender" name="player-action">
+        <input type="radio" id="surrender" name="player-action" value="surrender">
         <label for="surrender">surrender</label>
         <input type="submit">
     </form>

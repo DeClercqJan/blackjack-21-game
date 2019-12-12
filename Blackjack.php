@@ -7,12 +7,16 @@ class Blackjack
     // Add a property to this class called score. This property should have the value of the player's score at all times.
     // OPGELET: die property public/private/protected moet er precies bij
     public $score = 0;
+    public $status = "undecided";
     function hit($current_score)
     {
-        $this->score = $current_score + 5;
+        $this->score = $current_score + rand(1,11); 
         // Hit should add a card between 1-11.
+        if ($this->score > 21) {
+            $this->status = "you lose";
+        }
     }
-    function add()
+    function stand()
     {
         // Stand should end your turn and start the dealer's turn. (Your point total is saved.) 
     }
