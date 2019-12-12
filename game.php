@@ -45,6 +45,20 @@ if (isset($_GET["play-game-button"])) {
     if ($_POST["player-action"] == "hit") {
         // var_dump($player);
         $player->hit($player->score);
+        if ($player->score == 21 && $player->cards == 2) {
+            $player->status = "win";
+        } else if ($player->score == 21) {
+            while ($dealer->score < 15) {
+                $dealer->hit($dealer->score);
+            }
+            if ($dealer->score > 21) {
+                $player->status = "win";
+            } else if ($player->score > $dealer->score && $player->score <= 21) {
+                $player->status = "win";
+            } else {
+                $player->status = "lose";
+            }
+        }
     } else if ($_POST["player-action"] == "stand") {
         // var_dump($player);
         // VRAAG: WAT MOET IK DOEN MET STAND; IS DAT WEL NODIG?
@@ -63,6 +77,9 @@ if (isset($_GET["play-game-button"])) {
     } else if ($_POST["player-action"] == "surrender") {
         // var_dump($player);
         $player->surrender();
+        while ($dealer->score < 15) {
+            $dealer->hit($dealer->score);
+        }
     }
 
     // TO DO: RESULTS_PHASE IN AFZONDERLIJK FUNCTIE STEKEN OFZO; EERSTE POGING NIET SUCCESVOL. EDIT DENK DAT IK HETN U WEL HEB, DOOR GESCHEIDEN SCOPES TE OVERBRUGEN DOOR MIDDEL VAN PARAMETER MEE TE GEVEN AAN FUNCTIE
@@ -70,12 +87,10 @@ if (isset($_GET["play-game-button"])) {
     {
         var_dump($player);
         var_dump($dealer);
-        if ($player->score == 21) {
-            $player->status = 21;
-        }
-        if ($player->score == 21 && $player->cards == 2) {
-            $player->status = "win, blackjack even";
-        }
+        // var_dump($player->cards);
+        // var_dump($player->score);
+
+
         if ($player->score > 21) {
             $player->status = "lose";
         }
@@ -86,29 +101,38 @@ if (isset($_GET["play-game-button"])) {
             // echo "dealer score is $dealer->score";
         } else if ($player->status == "win") {
             echo "you win, cuz you have $player->score and the dealer has $dealer->score";
-            // eventueel deze zaken nog in afzonderlijk reset-functie steken
+            // TO DO eventueel deze zaken nog in afzonderlijk reset-functie steken
             $player->score = 0;
             $player->status = "undecided";
+            $player->cards = 0;
             $games_won_previous = $_COOKIE["games-won"];
             $games_won_new = (int) $games_won_previous + 1;
             setcookie("games-won", $games_won_new);
             echo "you have now lost $games_won_new games. Play again.";
+            $dealer->score = 0;
+            $dealer->cards = 0;
         } else if ($_POST["player-action"] == "surrender") {
-            echo "you lose, cuz  you surrendered, you idiot";
+            echo "you lose, cuz  you surrendered, you idiot. The dealer would have had $dealer->score. You had $player->score";
             $player->score = 0;
             $player->status = "undecided";
+            $player->cards = 0;
             $games_lost_previous = $_COOKIE["games-lost"];
             $games_lost_new = (int) $games_lost_previous + 1;
             setcookie("games-lost", $games_lost_new);
             echo "you have now lost $games_lost_new games. Play again.";
+            $dealer->score = 0;
+            $dealer->cards = 0;
         } else {
             echo "you lose, cuz you have $player->score and the dealer has $dealer->score";
             $player->score = 0;
             $player->status = "undecided";
+            $player->cards = 0;
             $games_lost_previous = $_COOKIE["games-lost"];
             $games_lost_new = (int) $games_lost_previous + 1;
             setcookie("games-lost", $games_lost_new);
             echo "you have now lost $games_lost_new games. Play again.";
+            $dealer->score = 0;
+            $dealer->cards = 0;
         }
     }
     results_phase($player, $dealer);
