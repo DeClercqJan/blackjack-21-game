@@ -7,10 +7,12 @@ class Blackjack
     // Add a property to this class called score. This property should have the value of the player's score at all times.
     // OPGELET: die property public/private/protected moet er precies bij
     public $score = 0;
+    public $cards = 0;
     public $status = "undecided";
     function hit($current_score)
     {
         $this->score = $current_score + rand(1,11); 
+        $this->cards++; 
         // Hit should add a card between 1-11.
     }
     function stand()
@@ -19,6 +21,7 @@ class Blackjack
     }
     function surrender()
     {
+        $this->status = "lose";
         //        Surrender should make you surrender the game. (Dealer wins.)   
     }
 }
