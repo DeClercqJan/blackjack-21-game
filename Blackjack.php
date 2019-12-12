@@ -12,9 +12,6 @@ class Blackjack
     {
         $this->score = $current_score + rand(1,11); 
         // Hit should add a card between 1-11.
-        if ($this->score > 21) {
-            $this->status = "you lose";
-        }
     }
     function stand()
     {
