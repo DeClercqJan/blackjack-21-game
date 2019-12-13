@@ -45,5 +45,18 @@ if (empty($_GET) && empty($_POST)) {
         $_SESSION["cards-left"] = serialize($cards_left);
         $_SESSION["player"] = serialize($player);
         check_result($player, $dealer);
+    } else if ($_POST["player-action"] == "surrender") {
+        // var_dump($player);
+        $player = unserialize($_SESSION["player"]);
+        // var_dump($player);
+        $dealer = unserialize($_SESSION["dealer"]);
+        // var_dump($dealer);
+        $cards_left = unserialize($_SESSION["cards-left"]);
+        while ($dealer->score < 15) {
+            $dealer->hit($cards_left);
+        }
+        // var_dump($dealer);  
+        $player->surrender();
+        echo "you surrendered so you lost. When you clicked the button, you had $player->score. The dealer would have had $dealer->score";
     }
 }

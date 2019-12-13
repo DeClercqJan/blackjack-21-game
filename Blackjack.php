@@ -24,6 +24,8 @@ class Blackjack
     function surrender()
     {
         //        Surrender should make you surrender the game. (Dealer wins.)   
+        save_lose();
+        reset_game();
     }
 }
 
@@ -166,6 +168,12 @@ function check_result($player, $dealer)
     if ($player->score > 21) {
         echo "you lose, because you have $player->score.";
         save_lose();
+        reset_game();
+    }
+    if ($player->score == 21 && $player->cards == 2) {
+        // note: did not check if this works!
+        echo "Blackjack! you win, because you have $player->score with only $player->cards cards!";
+        save_win();
         reset_game();
     }
 }
