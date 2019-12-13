@@ -157,3 +157,54 @@ function get_card($cards)
     $card = $cards[0][rand(0, 12)];
     return $card;
 }
+
+function check_result($player, $dealer)
+{
+    echo "test result functie";
+    var_dump($player);
+    var_dump($dealer);
+    if ($player->score > 21) {
+        echo "you lose, because you have $player->score.";
+        save_lose();
+        reset_game();
+    }
+}
+
+function save_lose()
+{
+    $games_lost_previous = $_COOKIE["games-lost"];
+    $games_lost_new = (int) $games_lost_previous + 1;
+    setcookie("games-lost", $games_lost_new);
+}
+
+
+function save_win()
+{
+    $games_won_previous = $_COOKIE["games-won"];
+    $games_won_new = (int) $games_won_previous + 1;
+    setcookie("games-won", $games_won_new);
+}
+
+function reset_game()
+{
+    // note: reset to same conditions as when originally started the game: alle cards back in the pile, player and dealer each get one, score is zero
+    $cards = unserialize($_SESSION["cards-left"]);
+    // var_dump($cards);
+    foreach ($cards as $type) {
+        foreach ($type as $card) {
+            $card->in_deck = true;
+        }
+    }
+    // var_dump($cards);
+    $player = unserialize($_SESSION["player"]);
+    $dealer = unserialize($_SESSION["dealer"]);
+    $player->score = 0;
+    $dealer->score = 0;
+    $player->cards = 0;
+    $dealer->cards = 0;
+    $player->hit($cards);
+    $dealer->hit($cards);
+    $_SESSION["player"] = serialize($player);
+    $_SESSION["dealer"] = serialize($dealer);
+    $_SESSION["cards-left"] = serialize($cards);
+}
