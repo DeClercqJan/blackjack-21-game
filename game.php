@@ -16,7 +16,7 @@ require "Blackjack.php";
 </form>
 <?php
 
-if (!empty($_POST)) {
+if ($_POST["player-action"] == "hit") {
     // var_dump($_POST);
     // echo "post not empty";
 
@@ -32,7 +32,7 @@ if (!empty($_POST)) {
     var_dump($card);
 
     $_SESSION["card-taken"] = serialize($card);
-    $_SESSION["cards-left"] = serialize($cards_left);
+    $_SESSION["cards-left"] = serialize($cards);
 
     var_dump($cards_left);
     // to make sure card is in deck;
@@ -52,7 +52,6 @@ if (!empty($_POST)) {
     */
     // var_dump($card);
     // var_dump($cards);
-
 }
 
 // } else {
