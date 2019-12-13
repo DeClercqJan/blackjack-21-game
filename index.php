@@ -1,5 +1,4 @@
 <?php
-//echo "blackjack!";
 // Create a button on home.php that starts the game when pushed, it should go to game.php.
 session_start();
 ?>
