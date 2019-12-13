@@ -33,12 +33,15 @@ if (isset($_GET["play-game-button"])) {
     </form>
 <?php
 } else if (isset($_POST["player-action"])) {
+
     //var_dump($_POST);
     var_dump($_SESSION["player"]);
     var_dump($_SESSION["dealer"]);
     // krijg error message ( ! ) Notice: main(): The script tried to execute a method or access a property of an incomplete object. Please ensure that the class definition ; of the object you are trying to operate on was loaded _before_ unserialize() gets called or provi
     $player = unserialize($_SESSION["player"]);
     $dealer = unserialize($_SESSION["dealer"]);
+    // zorgen dat ze zeker 1 kaartje hebben
+
     // var_dump($player);
     // var_dump($dealer);
     // deze nog afhankelijk maken van actie
