@@ -11,10 +11,11 @@ class Blackjack
         $array = get_card($cards_both);
         // TO DO: SOMETIMES THE FIRST ONE IS ALREADY FALSE -> MAKE SURE ONLY TRUE CARDS CAN BE TAKEN
         $card = $array;
-        var_dump($card);
+        // var_dump($card);
         $card->in_deck = false;
-        var_dump($card);
+        // var_dump($card);
         $this->score += $card->points;
+        $this->cards++;
     }
     function stand()
     {

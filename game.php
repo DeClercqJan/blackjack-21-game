@@ -15,8 +15,14 @@ if (empty($_GET) && empty($_POST)) {
         $player->hit($cards);
         var_dump($player);
         $_SESSION["player"] = serialize($player);
-        $_SESSION["cards-left"] = serialize($cards);
+        // $_SESSION["cards-left"] = serialize($cards);
         // var_dump($cards);
+        $dealer = new Blackjack();
+        $dealer->hit($cards);
+        var_dump($dealer);
+        var_dump($cards);
+        $_SESSION["dealer"] = serialize($dealer);
+        $_SESSION["cards-left"] = serialize($cards);
     }
 } else if (empty($_GET) && !empty($_POST)) {
     echo "you have clicked some button";
