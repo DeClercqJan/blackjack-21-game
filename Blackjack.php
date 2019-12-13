@@ -38,7 +38,7 @@ class Hearts extends Cards
 
 class Diamonds extends Cards
 {
-    public $type = "hearts";
+    public $type = "Diamonds";
     public $name;
     public function Create($name, $points)
     {
@@ -50,7 +50,7 @@ class Diamonds extends Cards
 
 class Spades extends Cards
 {
-    public $type = "hearts";
+    public $type = "Spades";
     public $name;
     public function Create($name, $points)
     {
@@ -62,7 +62,7 @@ class Spades extends Cards
 
 class Clubs extends Cards
 {
-    public $type = "hearts";
+    public $type = "Clubs";
     public $name;
     public function Create($name, $points)
     {
@@ -79,7 +79,6 @@ $spades = [];
 $clubs = [];
 
 for ($i = 2; $i < 11; $i++) {
-    // echo "test $i";
     $x = new Hearts();
     $x->Create($i, $i);
     array_push($hearts, $x);
@@ -100,37 +99,67 @@ for ($i = 2; $i < 11; $i++) {
     array_push($clubs, $x);
 }
 
-// var_dump($hearts);
-// var_dump($diamonds);
-// var_dump($spades);
-// var_dump($clubs);
-
 // hm, deze moet erachter staan, anders werkt het niet
-$cards = ["hearts" => $hearts, "diamonds" => $diamonds, "spades" => $spades, "clubs" => $clubs];
-// var_dump($cards);
+// ook: associative array niet zo interessant als ik random number wil bepalen
+// $cards = ["hearts" => $hearts, "diamonds" => $diamonds, "spades" => $spades, "clubs" => $clubs];
+$cards = [$hearts, $diamonds, $spades, $clubs];
 
 foreach ($cards as $key => $value) {
-    // var_dump($key);
-    // var_dump($value);
-    // echo "test $type";
+    // NOTE: because these are created this way, their class is cards, not hearts ...
+    switch ($key) {
+        case 0:
+            $type = "hearts";
+            break;
+        case 1:
+            $type = "diamonds";
+            break;
+        case 2:
+            $type = "spades";
+            break;
+        case 3:
+            $type = "clubs";
+            break;
+    }
     $jack = new Cards();
     $jack->Create("jack", 10);
-    $jack->type = $key;
-    // var_dump($x);
+    $jack->type = $type;
     array_push($cards[$key], $jack);
     $queen = new Cards();
     $queen->Create("queen", 10);
-    $queen->type = $key;
+    $queen->type = $type;
     array_push($cards[$key], $queen);
     $king = new Cards();
     $king->Create("king", 10);
-    $king->type = $key;
+    $king->type = $type;
     array_push($cards[$key], $king);
     // TO DO: IF TIME AND MAYBE NOT HERE: ACE CAN BE EITHER 1 OR 11
     $ace = new Cards();
     $ace->Create("ace", 1);
-    $ace->type = $key;
+    $ace->type = $type;
     array_push($cards[$key], $ace);
 }
 
+function get_card($cards)
+{
+    $card = $cards[rand(0, 3)][rand(0, 12)];
+    return $card;
+}
+
+$card = get_card($cards);
+var_dump($card);
+
+// to make sure card is in deck;
+if ($card->in_deck = true) {
+    echo "in deck";
+    $card->in_deck = false;
+    // $card->in_deck = false;
+    // checken of ik het ook in de array aanpas zo 
+    // var_dump($card);
+    // var_dump($cards);
+    //return $card;
+} else if ($card->in_deck = false) {
+    echo "not in deck";
+    // get_card($cards);
+}
+var_dump($card);
 var_dump($cards);
