@@ -141,25 +141,8 @@ foreach ($cards as $key => $value) {
 
 function get_card($cards)
 {
-    $card = $cards[rand(0, 3)][rand(0, 12)];
+    // CHANGED THIS BECAUSE IT'S EASIER TO WORK WITH SOME PREDICTABILITY
+    // $card = $cards[rand(0, 3)][rand(0, 12)];
+    $card = $cards[0][rand(0, 12)];
     return $card;
 }
-
-$card = get_card($cards);
-var_dump($card);
-
-// to make sure card is in deck;
-if ($card->in_deck = true) {
-    echo "in deck";
-    $card->in_deck = false;
-    // $card->in_deck = false;
-    // checken of ik het ook in de array aanpas zo 
-    // var_dump($card);
-    // var_dump($cards);
-    //return $card;
-} else if ($card->in_deck = false) {
-    echo "not in deck";
-    // get_card($cards);
-}
-var_dump($card);
-var_dump($cards);
