@@ -21,13 +21,12 @@ if (empty($_GET) && empty($_POST)) {
     echo "you have clicked some button";
     include "form.html";
     if ($_POST["player-action"] == "hit") {
-        // var_dump($player);
         $player = unserialize($_SESSION["player"]);
+        // var_dump($player);
         $cards_left = unserialize($_SESSION["cards-left"]);
         $player->hit($cards_left);
         $_SESSION["cards-left"] = serialize($cards_left);
-        var_dump($cards_left);
-        // var_dump($player);
-
+        // var_dump($cards_left);
+        var_dump($player);
     }
 }
