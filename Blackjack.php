@@ -4,8 +4,14 @@ class Blackjack
 {
     // Add a property to this class called score. This property should have the value of the player's score at all times.
     public $score = 0;
-    function hit()
-    { }
+    function hit($cards_both)
+    {
+        $card = get_card($cards_both);
+        // TO DO: SOMETIMES THE FIRST ONE IS ALREADY FALSE -> MAKE SURE ONLY TRUE CARDS CAN BE TAKEN
+        var_dump($card);
+        $card->in_deck = false;
+        var_dump($card);
+    }
     function stand()
     {
         // Stand should end your turn and start the dealer's turn. (Your point total is saved.) 
