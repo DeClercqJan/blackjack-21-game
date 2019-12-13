@@ -3,15 +3,18 @@
 class Blackjack
 {
     // Add a property to this class called score. This property should have the value of the player's score at all times.
-    public $score;
+    public $score = 0;
+    public $cards = 0;
     function hit($cards_both)
     {
-        $card = get_card($cards_both);
+        // $card = get_card($cards_both);
+        $array = get_card($cards_both);
         // TO DO: SOMETIMES THE FIRST ONE IS ALREADY FALSE -> MAKE SURE ONLY TRUE CARDS CAN BE TAKEN
+        $card = $array;
         var_dump($card);
         $card->in_deck = false;
         var_dump($card);
-        $this->score = "test";
+        $this->score += $card->points;
     }
     function stand()
     {

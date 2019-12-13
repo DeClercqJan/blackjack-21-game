@@ -11,9 +11,10 @@ if (empty($_GET) && empty($_POST)) {
     if ($_GET["play-game-button"] == "Submit Query") {
         include "form.html";
         $player = new Blackjack();
-        $_SESSION["player"] = serialize($player);
         // var_dump($player);
         $player->hit($cards);
+        var_dump($player);
+        $_SESSION["player"] = serialize($player);
         $_SESSION["cards-left"] = serialize($cards);
         // var_dump($cards);
     }
@@ -25,8 +26,10 @@ if (empty($_GET) && empty($_POST)) {
         // var_dump($player);
         $cards_left = unserialize($_SESSION["cards-left"]);
         $player->hit($cards_left);
-        $_SESSION["cards-left"] = serialize($cards_left);
         // var_dump($cards_left);
         var_dump($player);
+        // OPSLAAN IN SESSIE OF COOKIE OP HET EINDE!
+        $_SESSION["cards-left"] = serialize($cards_left);
+        $_SESSION["player"] = serialize($player);
     }
 }
