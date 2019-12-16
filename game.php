@@ -11,6 +11,7 @@ require "Blackjack.php";
 var_dump($_GET);
 var_dump($_POST);
 var_dump($_SESSION);
+var_dump(unserialize($_SESSION["player"]));
 
 if (empty($_GET) && empty($_POST)) {
     echo "you need to go the home page first in order to start playing";

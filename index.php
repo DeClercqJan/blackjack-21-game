@@ -1,6 +1,10 @@
 <?php
 // Create a button on home.php that starts the game when pushed, it should go to game.php.
 session_start();
+if (isset($_SESSION["game-has-been-reset"]) && $_SESSION["game-has-been-reset"] == true) {
+    echo "game has been reset";
+    $_SESSION["game-has-been-reset"] = false;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +15,7 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
     <form method="GET" action="game.php">
         <input type="submit" name="play-game-button">
