@@ -41,7 +41,7 @@ if (empty($_GET) && empty($_POST)) {
         $cards_left = unserialize($_SESSION["cards-left"]);
         $player->hit($cards_left);
         if (isset($_SESSION["game-has-been-reset"]) && $_SESSION["game-has-been-reset"] == true) {
-            echo "game has been reset";
+            echo "game has been reset <br>";
             $_SESSION["game-has-been-reset"] = false;
             $dealer->hit($cards_left);
             // var_dump($cards_left);
@@ -59,7 +59,7 @@ if (empty($_GET) && empty($_POST)) {
         $dealer = unserialize($_SESSION["dealer"]);
         $cards_left = unserialize($_SESSION["cards-left"]);
         if (isset($_SESSION["game-has-been-reset"]) && $_SESSION["game-has-been-reset"] == true) {
-            echo "game has been reset";
+            echo "game has been reset <br>";
             $_SESSION["game-has-been-reset"] = false;
             $player->hit($cards_left);
             // var_dump($cards_left);
@@ -81,7 +81,7 @@ if (empty($_GET) && empty($_POST)) {
         // var_dump($dealer);
         $cards_left = unserialize($_SESSION["cards-left"]);
         if (isset($_SESSION["game-has-been-reset"]) && $_SESSION["game-has-been-reset"] == true) {
-            echo "game has been reset";
+            echo "game has been reset <br>";
             $_SESSION["game-has-been-reset"] = false;
             $player->hit($cards_left);
             // var_dump($cards_left);
@@ -92,7 +92,7 @@ if (empty($_GET) && empty($_POST)) {
         }
         // var_dump($dealer);  
         $player->surrender();
-        echo "you surrendered so you lost. When you clicked the button, you had $player->score. The dealer would have had $dealer->score";
+        echo "you surrendered so you lost. When you clicked the button, you had $player->score. The dealer would have had $dealer->score <br>";
         include "cards_player.php";
         include "cards_dealer.php";
         // var_dump($player);
