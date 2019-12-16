@@ -4,7 +4,8 @@ class Blackjack
 {
     // Add a property to this class called score. This property should have the value of the player's score at all times.
     public $score = 0;
-    public $cards = 0;
+    public $hand = [];
+    public $cards_amount = 0;
     function hit($cards_both)
     {
         // $card = get_card($cards_both);
@@ -14,7 +15,8 @@ class Blackjack
         // var_dump($card);
         $card->in_deck = false;
         $this->score += $card->points;
-        $this->cards++;
+        $this->cards_amount++;
+        array_push($this->hand, $card);
         return $card;
     }
     function stand()
@@ -207,31 +209,36 @@ function get_card($cards)
 
 function check_result($player, $dealer)
 {
-    echo "test result functie";
-    var_dump($player);
-    var_dump($dealer);
+    // echo "test result functie";
+    // var_dump($player);
+    // var_dump($dealer);
     if ($player->score > 21) {
+        include "cards_dealer.php";
         echo "you lose, because you have $player->score.";
         save_lose();
         reset_game();
     }
-    if ($player->score == 21 && $player->cards == 2) {
+    if ($player->score == 21 && $player->cards_amount == 2) {
         // note: did not check if this works!
+        include "cards_dealer.php";
         echo "Blackjack! you win, because you have $player->score with only $player->cards cards!";
         save_win();
         reset_game();
     }
     if ($dealer->score > 21) {
+        include "cards_dealer.php";
         echo "you win, because the dealer has $dealer->score.";
         save_lose();
         reset_game();
     }
     if ($_POST["player-action"] == "stand") {
         if ($player->score > $dealer->score) {
+            include "cards_dealer.php";
             echo "you win, because you have $player->score and the dealer has $dealer->score";
             save_win();
             reset_game();
         } else if ($player->score < $dealer->score) {
+            include "cards_dealer.php";
             echo "you lose, because you have $player->score and the dealer has $dealer->score";
             save_lose();
             reset_game();
@@ -273,8 +280,12 @@ function reset_game()
     $dealer = unserialize($_SESSION["dealer"]);
     $player->score = 0;
     $dealer->score = 0;
-    $player->cards = 0;
-    $dealer->cards = 0;
+    $player->cards_amount = 0;
+    $dealer->cards_amount = 0;
+    $player->hand = [];
+    $dealer->hand = [];
+    // var_dump($player);
+    // var_dump($dealer);
     // PLAYERS IMMEDIATELY GET A CARD
     // $player->hit($cards);
     // i$dealer->hit($cards);
@@ -283,4 +294,5 @@ function reset_game()
     $_SESSION["cards-left"] = serialize($cards);
     $_SESSION["game-has-been-reset"] = true;
     // echo "game has been reset";
+
 }

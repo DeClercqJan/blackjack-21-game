@@ -13,23 +13,22 @@ if (empty($_GET) && empty($_POST)) {
     echo "you need to go the home page first in order to start playing";
 } else if (!empty($_GET) && empty($_POST)) {
     if ($_GET["play-game-button"] == "Submit Query") {
-        include "form.php";
         $player = new Blackjack();
         // var_dump($player);
-        $card_player = $player->hit($cards);
+        $player->hit($cards);
         // var_dump($card_image_url);
-        echo  "<img style='height: 100px;' src=$card_player->image.jpg>";
-        var_dump($player);
+        // var_dump($player);
         // var_dump($player);
         $_SESSION["player"] = serialize($player);
         // $_SESSION["cards-left"] = serialize($cards);
         // var_dump($cards);
         $dealer = new Blackjack();
-        $card_dealer = $dealer->hit($cards);
-        echo  "<img style='height: 100px;' src=$card_dealer->image.jpg>";
-        var_dump($dealer);
+        $dealer->hit($cards);
+        // var_dump($dealer);
         // var_dump($dealer);
         // var_dump($cards);
+        include "form.php";
+        include  "cards_player.php";
         $_SESSION["dealer"] = serialize($dealer);
         $_SESSION["cards-left"] = serialize($cards);
     }
@@ -51,6 +50,7 @@ if (empty($_GET) && empty($_POST)) {
         // var_dump($cards_left);
         // var_dump($player);
         // OPSLAAN IN SESSIE OF COOKIE OP HET EINDE!
+        include "cards_player.php";
         $_SESSION["cards-left"] = serialize($cards_left);
         $_SESSION["player"] = serialize($player);
         check_result($player, $dealer);
@@ -68,6 +68,8 @@ if (empty($_GET) && empty($_POST)) {
         while ($dealer->score < 15) {
             $dealer->hit($cards_left);
         }
+        include  "cards_player.php";
+        // include "cards_dealer.php";
         $_SESSION["cards-left"] = serialize($cards_left);
         $_SESSION["dealer"] = serialize($dealer);
         check_result($player, $dealer);
@@ -91,7 +93,9 @@ if (empty($_GET) && empty($_POST)) {
         // var_dump($dealer);  
         $player->surrender();
         echo "you surrendered so you lost. When you clicked the button, you had $player->score. The dealer would have had $dealer->score";
-        var_dump($player);
-        var_dump($dealer);
+        include "cards_player.php";
+        include "cards_dealer.php";
+        // var_dump($player);
+        // var_dump($dealer);
     }
 }
