@@ -3,7 +3,7 @@
 session_start();
 if (isset($_SESSION["game-has-been-reset"]) && $_SESSION["game-has-been-reset"] == true) {
     echo "game has been reset";
-    $_SESSION["game-has-been-reset"] = false;
+    session_unset();
 }
 ?>
 <!DOCTYPE html>

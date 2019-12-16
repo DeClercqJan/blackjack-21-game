@@ -41,7 +41,11 @@ class Cards
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
-        $this->image = "image url test name: $name en $type";
+        // changing names to fit image database names
+        $type_1 = strtoupper(substr($type, 0, 1));
+        $name_1 = strtoupper(substr($name, 0, 1));
+        $this->image = "/images/cards/$name_1$type_1";
+        // $this->image = "image url test name: $name (eerste letter: $name_1) en eerste letter van $type is $type_1";
         // $this->image = "test image url voor type: $type name: $name";    
     }
     public $image;
@@ -56,7 +60,13 @@ class Hearts extends Cards
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
-        $this->image = "image url test name: $name en $type";
+        if ($name == 10) {
+            $name_1 = strtoupper(substr($name, 0, 2));
+        } else {
+            $name_1 = strtoupper(substr($name, 0, 1));
+        }
+        $type_1 = strtoupper(substr($type, 0, 1));
+        $this->image = "/images/cards/$name_1$type_1";
     }
 }
 
@@ -70,7 +80,13 @@ class Diamonds extends Cards
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
-        $this->image = "image url test name: $name en $type";
+        if ($name == 10) {
+            $name_1 = strtoupper(substr($name, 0, 2));
+        } else {
+            $name_1 = strtoupper(substr($name, 0, 1));
+        }
+        $type_1 = strtoupper(substr($type, 0, 1));
+        $this->image = "/images/cards/$name_1$type_1";
     }
 }
 
@@ -84,7 +100,13 @@ class Spades extends Cards
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
-        $this->image = "image url test name: $name en $type";
+        $type_1 = strtoupper(substr($type, 0, 1));
+        if ($name == 10) {
+            $name_1 = strtoupper(substr($name, 0, 2));
+        } else {
+            $name_1 = strtoupper(substr($name, 0, 1));
+        }
+        $this->image = "/images/cards/$name_1$type_1";
     }
 }
 
@@ -98,7 +120,13 @@ class Clubs extends Cards
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
-        $this->image = "image url test name: $name en $type";
+        $type_1 = strtoupper(substr($type, 0, 1));
+        if ($name == 10) {
+            $name_1 = strtoupper(substr($name, 0, 2));
+        } else {
+            $name_1 = strtoupper(substr($name, 0, 1));
+        }
+        $this->image = "/images/cards/$name_1$type_1";
     }
 }
 
