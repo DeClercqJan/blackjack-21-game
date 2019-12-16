@@ -176,6 +176,26 @@ function check_result($player, $dealer)
         save_win();
         reset_game();
     }
+    if ($dealer->score > 21) {
+        echo "you win, because the dealer has $dealer->score.";
+        save_lose();
+        reset_game();
+    }
+    if ($_POST["player-action"] == "stand") {
+        if ($player->score > $dealer->score) {
+            echo "you win, because you have $player->score and the dealer has $dealer->score";
+            save_win();
+            reset_game();
+        } else if ($player->score < $dealer->score) {
+            echo "you lose, because you have $player->score and the dealer has $dealer->score";
+            save_lose();
+            reset_game();
+        } else if ($player->score == $dealer->score) {
+            echo "you lose, because you in case a draw, the dealer wins. You and the dealer had $player->score and $dealer->score";
+            save_lose();
+            reset_game();
+        }
+    }
 }
 
 function save_lose()
@@ -215,4 +235,5 @@ function reset_game()
     $_SESSION["player"] = serialize($player);
     $_SESSION["dealer"] = serialize($dealer);
     $_SESSION["cards-left"] = serialize($cards);
+    // echo "game has been reset";
 }
