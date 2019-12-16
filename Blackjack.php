@@ -13,9 +13,9 @@ class Blackjack
         $card = $array;
         // var_dump($card);
         $card->in_deck = false;
-        // var_dump($card);
         $this->score += $card->points;
         $this->cards++;
+        return $card;
     }
     function stand()
     {

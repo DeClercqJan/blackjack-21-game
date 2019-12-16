@@ -8,22 +8,6 @@ if (!isset($_COOKIE["games-won"])) {
 }
 require "Blackjack.php";
 
-// var_dump($_GET);
-// var_dump($_POST);
-// var_dump($_SESSION);
-// var_dump(unserialize($_SESSION["player"]));
-// if (isset($cards)) {
-//     var_dump($cards);
-// }
-// if (isset($cards_left)) {
-//     var_dump($cards_left);
-// }
-foreach ($cards as $type) {
-    foreach ($type as $card) {
-        var_dump($card->image);
-        echo  "<img style='height: 100px;' src=$card->image.jpg>";
-    }
-}
 
 if (empty($_GET) && empty($_POST)) {
     echo "you need to go the home page first in order to start playing";
@@ -32,14 +16,17 @@ if (empty($_GET) && empty($_POST)) {
         include "form.php";
         $player = new Blackjack();
         // var_dump($player);
-        $player->hit($cards);
+        $card_player = $player->hit($cards);
+        // var_dump($card_image_url);
+        echo  "<img style='height: 100px;' src=$card_player->image.jpg>";
         var_dump($player);
         // var_dump($player);
         $_SESSION["player"] = serialize($player);
         // $_SESSION["cards-left"] = serialize($cards);
         // var_dump($cards);
         $dealer = new Blackjack();
-        $dealer->hit($cards);
+        $card_dealer = $dealer->hit($cards);
+        echo  "<img style='height: 100px;' src=$card_dealer->image.jpg>";
         var_dump($dealer);
         // var_dump($dealer);
         // var_dump($cards);
