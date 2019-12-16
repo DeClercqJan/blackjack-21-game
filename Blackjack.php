@@ -35,29 +35,42 @@ class Cards
     public $points;
     public $in_deck;
     public $name;
-    public function Create($name, $points)
+    public function Create($name, $points, $type)
     {
         // aha, ik kan hier zomaar aan die points;
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
+        $this->image = "image url test name: $name en $type";
+        // $this->image = "test image url voor type: $type name: $name";    
     }
+    public $image;
 }
 
 class Hearts extends Cards
 {
     public $type = "hearts";
+    public function Create($name, $points, $type)
+    {
+        // aha, ik kan hier zomaar aan die points;
+        $this->name = $name;
+        $this->points = $points;
+        $this->in_deck = true;
+        $this->image = "image url test name: $name en $type";
+    }
 }
 
 class Diamonds extends Cards
 {
     public $type = "Diamonds";
     public $name;
-    public function Create($name, $points)
+    public function Create($name, $points, $type)
     {
+        // aha, ik kan hier zomaar aan die points;
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
+        $this->image = "image url test name: $name en $type";
     }
 }
 
@@ -65,11 +78,13 @@ class Spades extends Cards
 {
     public $type = "Spades";
     public $name;
-    public function Create($name, $points)
+    public function Create($name, $points, $type)
     {
+        // aha, ik kan hier zomaar aan die points;
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
+        $this->image = "image url test name: $name en $type";
     }
 }
 
@@ -77,11 +92,13 @@ class Clubs extends Cards
 {
     public $type = "Clubs";
     public $name;
-    public function Create($name, $points)
+    public function Create($name, $points, $type)
     {
+        // aha, ik kan hier zomaar aan die points;
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
+        $this->image = "image url test name: $name en $type";
     }
 }
 
@@ -93,22 +110,22 @@ $clubs = [];
 
 for ($i = 2; $i < 11; $i++) {
     $x = new Hearts();
-    $x->Create($i, $i);
+    $x->Create($i, $i, "hearts");
     array_push($hearts, $x);
 }
 for ($i = 2; $i < 11; $i++) {
     $x = new Diamonds();
-    $x->Create($i, $i);
+    $x->Create($i, $i, "diamonds");
     array_push($diamonds, $x);
 }
 for ($i = 2; $i < 11; $i++) {
     $x = new Spades();
-    $x->Create($i, $i);
+    $x->Create($i, $i, "spades");
     array_push($spades, $x);
 }
 for ($i = 2; $i < 11; $i++) {
     $x = new Clubs();
-    $x->Create($i, $i);
+    $x->Create($i, $i, "clubs");
     array_push($clubs, $x);
 }
 
@@ -134,20 +151,20 @@ foreach ($cards as $key => $value) {
             break;
     }
     $jack = new Cards();
-    $jack->Create("jack", 10);
+    $jack->Create("jack", 10, $type);
     $jack->type = $type;
     array_push($cards[$key], $jack);
     $queen = new Cards();
-    $queen->Create("queen", 10);
+    $queen->Create("queen", 10, $type);
     $queen->type = $type;
     array_push($cards[$key], $queen);
     $king = new Cards();
-    $king->Create("king", 10);
+    $king->Create("king", 10, $type);
     $king->type = $type;
     array_push($cards[$key], $king);
     // TO DO: IF TIME AND MAYBE NOT HERE: ACE CAN BE EITHER 1 OR 11
     $ace = new Cards();
-    $ace->Create("ace", 1);
+    $ace->Create("ace", 1, $type);
     $ace->type = $type;
     array_push($cards[$key], $ace);
 }
@@ -215,7 +232,7 @@ function save_win()
 
 function reset_game()
 {
-    // note: reset to same conditions as when originally started the game: alle cards back in the pile, player and dealer each get one, score is zero
+    // note: reset to same conditions as when originally started the game: alle cards back in the pile, player and dealer each get one, score is zero. edit: giving each player a card has been put elsewhere in order so that the flow remains logical for player and they don't get 2 cards when pressing on hit
     $cards = unserialize($_SESSION["cards-left"]);
     // var_dump($cards);
     foreach ($cards as $type) {
