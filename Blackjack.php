@@ -230,10 +230,12 @@ function reset_game()
     $dealer->score = 0;
     $player->cards = 0;
     $dealer->cards = 0;
-    $player->hit($cards);
-    $dealer->hit($cards);
+    // PLAYERS IMMEDIATELY GET A CARD
+    // $player->hit($cards);
+    // i$dealer->hit($cards);
     $_SESSION["player"] = serialize($player);
     $_SESSION["dealer"] = serialize($dealer);
     $_SESSION["cards-left"] = serialize($cards);
+    $_SESSION["game-has-been-reset"] = true;
     // echo "game has been reset";
 }
