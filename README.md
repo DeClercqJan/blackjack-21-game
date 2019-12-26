@@ -1,4 +1,4 @@
-# blackjack
+# blackjack-21-game
 Becode PHP exercise on Ojbect Oriented Programming
 
 ## Basic idea
@@ -8,6 +8,9 @@ Becode PHP exercise on Ojbect Oriented Programming
 - alternative version on the 'old' branch not creating cards or using much of oop, but just writing procedural code to generate numbers
 
 ## To do's
+- check the actual rules of black jack (I know aces work differently ...)
+-
+
 
 # ORIGINAL ASSIGNMENT BELOW
 
