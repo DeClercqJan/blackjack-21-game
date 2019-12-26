@@ -1,23 +1,29 @@
-# blackjack-21-game
-Becode PHP exercise on Ojbect Oriented Programming
+# blackjack/21 game
 
 ## Basic idea
+- get more cards, stand or surrender and win/lose from dealer
+- Becode PHP exercise on Ojbect Oriented Programming
 
 ## implementation
-- 
+- OOP/reusable building blocks
+- dynamic 
+- score keeping in sessions and cookies
 - alternative version on the 'old' branch not creating cards or using much of oop, but just writing procedural code to generate numbers
 
 ## To do's
 - check the actual rules of black jack (I know aces work differently ...)
--
-
+- stand is not a method (requirement)
+- styling
+- clean up code (comments mainly)
+- deplay it live somewhere
 
 # ORIGINAL ASSIGNMENT BELOW
 
 # Title: OOP: Blackjack
 
 - Repository: `php-blackjack`
-- Type of Challenge: `Learning challenge`
+- Type of Challenge: `Learning challenge`If this is still an unclear subject for you don't feel bad to google some basic OOP articles, or ask your coach.
+
 - Duration: `2 days`
 - Team challenge : `solo`
 
@@ -31,7 +37,6 @@ Before giving this exercise it might be a good advice to give some live coding l
 Let's make a game in PHP: Blackjack!
 To keep the code structured we are going to use objects!
 
-If this is still an unclear subject for you don't feel bad to google some basic OOP articles, or ask your coach.
 This is a really complex subject!
 
 ### Blackjack Rules
