@@ -6,7 +6,7 @@
 
 ## implementation
 - OOP/reusable building blocks
-- dynamic 
+- dynamic image url's to display cards
 - score keeping in sessions and cookies
 - alternative version on the 'old' branch not creating cards or using much of oop, but just writing procedural code to generate numbers
 
