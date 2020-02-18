@@ -9,13 +9,14 @@
 - dynamic image url's to display cards
 - score keeping in sessions and cookies
 - alternative version on the 'old' branch not creating cards or using much of oop, but just writing procedural code to generate numbers
+- Heroku deployment
 
 ## To do's
 - check the actual rules of black jack (I know aces work differently ...)
 - stand is not a method (requirement)
 - styling
 - clean up code (comments mainly)
-- deplay it live somewhere
+- saw that I was dealt 2 threes of hearts, which is not possible. Fix this
 
 # ORIGINAL ASSIGNMENT BELOW
 
