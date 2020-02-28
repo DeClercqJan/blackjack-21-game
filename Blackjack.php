@@ -1,18 +1,21 @@
 <?php
 // VRAAG: moet ik hier ook session_start(); toevoegen?? Wordt ingeladen in een andere pagina, lijkt me. idd, is niet nodig, want krijg anders error
-class Blackjack
+class Player
 {
     // Add a property to this class called score. This property should have the value of the player's score at all times.
     public $score = 0;
     public $hand = [];
     public $cards_amount = 0;
+    public $name = "";
+
+    public function __construct(string $name) {
+        $this->name = $name;
+    }
+    
     function hit($cards_both)
-    {
-        // $card = get_card($cards_both);
-        $array = get_card($cards_both);
+    {        $array = get_card($cards_both);
         // TO DO: SOMETIMES THE FIRST ONE IS ALREADY FALSE -> MAKE SURE ONLY TRUE CARDS CAN BE TAKEN
         $card = $array;
-        // var_dump($card);
         $card->in_deck = false;
         $this->score += $card->points;
         $this->cards_amount++;
@@ -39,7 +42,6 @@ class Cards
     public $name;
     public function Create($name, $points, $type)
     {
-        // aha, ik kan hier zomaar aan die points;
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
@@ -47,8 +49,6 @@ class Cards
         $type_1 = strtoupper(substr($type, 0, 1));
         $name_1 = strtoupper(substr($name, 0, 1));
         $this->image = "/images/cards/$name_1$type_1";
-        // $this->image = "image url test name: $name (eerste letter: $name_1) en eerste letter van $type is $type_1";
-        // $this->image = "test image url voor type: $type name: $name";    
     }
     public $image;
 }
@@ -58,7 +58,6 @@ class Hearts extends Cards
     public $type = "hearts";
     public function Create($name, $points, $type)
     {
-        // aha, ik kan hier zomaar aan die points;
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
@@ -78,7 +77,6 @@ class Diamonds extends Cards
     public $name;
     public function Create($name, $points, $type)
     {
-        // aha, ik kan hier zomaar aan die points;
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
@@ -98,7 +96,6 @@ class Spades extends Cards
     public $name;
     public function Create($name, $points, $type)
     {
-        // aha, ik kan hier zomaar aan die points;
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
@@ -118,7 +115,6 @@ class Clubs extends Cards
     public $name;
     public function Create($name, $points, $type)
     {
-        // aha, ik kan hier zomaar aan die points;
         $this->name = $name;
         $this->points = $points;
         $this->in_deck = true;
@@ -209,9 +205,6 @@ function get_card($cards)
 
 function check_result($player, $dealer)
 {
-    // echo "test result functie";
-    // var_dump($player);
-    // var_dump($dealer);
     if ($player->score > 21) {
         include "cards_dealer.php";
         echo "you lose, because you have $player->score.";
@@ -269,13 +262,11 @@ function reset_game()
 {
     // note: reset to same conditions as when originally started the game: alle cards back in the pile, player and dealer each get one, score is zero. edit: giving each player a card has been put elsewhere in order so that the flow remains logical for player and they don't get 2 cards when pressing on hit
     $cards = unserialize($_SESSION["cards-left"]);
-    // var_dump($cards);
     foreach ($cards as $type) {
         foreach ($type as $card) {
             $card->in_deck = true;
         }
     }
-    // var_dump($cards);
     $player = unserialize($_SESSION["player"]);
     $dealer = unserialize($_SESSION["dealer"]);
     $player->score = 0;
@@ -284,11 +275,6 @@ function reset_game()
     $dealer->cards_amount = 0;
     $player->hand = [];
     $dealer->hand = [];
-    // var_dump($player);
-    // var_dump($dealer);
-    // PLAYERS IMMEDIATELY GET A CARD
-    // $player->hit($cards);
-    // i$dealer->hit($cards);
     $_SESSION["player"] = serialize($player);
     $_SESSION["dealer"] = serialize($dealer);
     $_SESSION["cards-left"] = serialize($cards);

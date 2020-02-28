@@ -18,6 +18,8 @@ if (isset($_SESSION["game-has-been-reset"]) && $_SESSION["game-has-been-reset"] 
 
 <body>
     <form method="GET" action="game.php">
+        <label for="player-name">Enter player name</label>
+        <input type="text" name="playerName" id="player-name"></input></br>
         <input type="submit" name="play-game-button">
     </form>
 </body>
