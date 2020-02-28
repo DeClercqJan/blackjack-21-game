@@ -7,13 +7,19 @@ class Player
     public $hand = [];
     public $cards_amount = 0;
     public $name = "";
+    public $wins = 0;
+    public $losses = 0;
 
-    public function __construct(string $name) {
+    public function __construct(string $name, int $previous_wins, int $previous_losses)
+    {
         $this->name = $name;
+        $this->wins = $previous_wins;
+        $this->losses = $previous_losses;
     }
-    
+
     function hit($cards_both)
-    {        $array = get_card($cards_both);
+    {
+        $array = get_card($cards_both);
         // TO DO: SOMETIMES THE FIRST ONE IS ALREADY FALSE -> MAKE SURE ONLY TRUE CARDS CAN BE TAKEN
         $card = $array;
         $card->in_deck = false;
@@ -31,6 +37,14 @@ class Player
         //        Surrender should make you surrender the game. (Dealer wins.)   
         save_lose();
         reset_game();
+    }
+    function add_win()
+    {
+        $this->wins = $this->wins + 1;
+    }
+    function add_loss()
+    {
+        $this->losses = $this->wins + 1;
     }
 }
 
@@ -245,17 +259,29 @@ function check_result($player, $dealer)
 
 function save_lose()
 {
-    $games_lost_previous = $_COOKIE["games-lost"];
-    $games_lost_new = (int) $games_lost_previous + 1;
-    setcookie("games-lost", $games_lost_new);
+    // $games_lost_previous = $_COOKIE["games-lost"];
+    // $games_lost_new = (int) $games_lost_previous + 1;
+    // setcookie("games-lost", $games_lost_new);
+    $player = unserialize($_SESSION["player"]);
+    $dealer = unserialize($_SESSION["dealer"]);
+    $player->add_loss();
+    $dealer->add_win();
+    $_SESSION["player"] = serialize($player);
+    $_SESSION["dealer"] = serialize($dealer);
 }
 
 
 function save_win()
 {
-    $games_won_previous = $_COOKIE["games-won"];
-    $games_won_new = (int) $games_won_previous + 1;
-    setcookie("games-won", $games_won_new);
+    // $games_won_previous = $_COOKIE["games-won"];
+    // $games_won_new = (int) $games_won_previous + 1;
+    // setcookie("games-won", $games_won_new);
+    $player = unserialize($_SESSION["player"]);
+    $dealer = unserialize($_SESSION["dealer"]);
+    $player->add_wins();
+    $dealer->add_loss();
+    $_SESSION["player"] = serialize($player);
+    $_SESSION["dealer"] = serialize($dealer);
 }
 
 function reset_game()
@@ -280,5 +306,4 @@ function reset_game()
     $_SESSION["cards-left"] = serialize($cards);
     $_SESSION["game-has-been-reset"] = true;
     // echo "game has been reset";
-
 }
