@@ -295,6 +295,41 @@ function reset_game()
     }
     $player = unserialize($_SESSION["player"]);
     $dealer = unserialize($_SESSION["dealer"]);
+
+    var_dump($_COOKIE);
+    // save to cookie
+    if (isset($_COOKIE["players_array"])) {
+        $players_array_before = unserialize($_COOKIE["players_array"]);
+        // var_dump_pretty($players_array_before);
+        $player_name = $player->name;
+        // echo $player_name;
+        // var_dump($players_array_before);
+        // var_dump($_COOKIE);
+        if (in_array($player_name, $players_array_before)) {
+            echo "player name in array cookie";
+            // $key1 = array_search($player->name, $players_array_before);
+            // $replacements1 = array($key1 => $player);
+            // $players_array_new = array_replace($players_array_before, $replacements1);
+        }
+        $dealer_name = $dealer->name;
+        // echo $dealer_name;
+        if (in_array($dealer_name, $players_array_before)) {
+            echo "dealer name in array cookie";
+            // $key2 = array_search($dealer->name, $players_array_before);
+            // $replacements2 = array($key2 => $dealer);
+            // $players_array_new = array_replace($players_array_before, $replacements2);
+        }
+        // var_dump_pretty($replacements1);
+        // var_dump_pretty($replacements2);
+        // var_dump_pretty($players_array_new);
+        // setcookie("players_array", $players_array_new);
+    } else {
+        echo "zet cookie voor players van 0";
+        $players_array_new = array();
+        array_push($players_array_new, $dealer, $player);
+        setcookie("players_array", $players_array_new);
+    }
+    // reset game
     $player->score = 0;
     $dealer->score = 0;
     $player->cards_amount = 0;
@@ -305,5 +340,8 @@ function reset_game()
     $_SESSION["dealer"] = serialize($dealer);
     $_SESSION["cards-left"] = serialize($cards);
     $_SESSION["game-has-been-reset"] = true;
+
     // echo "game has been reset";
+
+
 }
